@@ -7,7 +7,7 @@ Here are the libraries needed for the code to work properly:
 | Functionality  | Name                      | Source |
 |----------------|---------------------------|--------|
 | Common         | `adafruit_bus_device`     | https://github.com/adafruit/Adafruit_CircuitPython_BusDevice |
-| Keyboard       | `bbq10keyboard`           | https://github.com/arturo182/arturo182_CircuitPython_BBQ10Keyboard |
+| Keyboard       | `bbq10keyboard`           | https://github.com/solderparty/arturo182_CircuitPython_BBQ10Keyboard |
 | LCD            | `adafruit_ili9341`        | https://github.com/adafruit/Adafruit_ILI9341 |
 | Neopixel       | `neopixel`                | https://github.com/adafruit/Adafruit_CircuitPython_Neopixel |
 | SD Card        | `adafruit_sdcard`         | https://github.com/adafruit/Adafruit_CircuitPython_SD |
