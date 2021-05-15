@@ -1,14 +1,32 @@
 from bbq10keyboard import BBQ10Keyboard, STATE_PRESS, STATE_RELEASE, STATE_LONG_PRESS
-from adafruit_stmpe610 import Adafruit_STMPE610_SPI
 import adafruit_ili9341
 import adafruit_sdcard
 import digitalio
 import displayio
 import neopixel
 import storage
-import board
+import analogio
 import time
 import os
+
+# Touch Libraries
+has_stmpe610 = True
+try:
+    from adafruit_stmpe610 import Adafruit_STMPE610_SPI
+except:
+    has_stmpe610 = False
+
+has_tca2004 = True
+try:
+    import tsc2004
+except:
+    has_tca2004 = False
+
+# Optional Pico Adapter
+try:
+    import kfw_pico_board as board
+except:
+    import board
 
 # Optional Qwiic test
 try:
@@ -33,12 +51,25 @@ display = adafruit_ili9341.ILI9341(display_bus, width=320, height=240)
 
 print('Display: Pass? (you tell me)')
 
+try:
+    i2c = board.I2C()
+except Exception as e:
+    print('I2C: Fail,', e)
+    all_passed = False
+
 # Touch Screen
 print('Touch the screen')
 try:
-    touch = Adafruit_STMPE610_SPI(spi, digitalio.DigitalInOut(touch_cs))
-    while touch.buffer_empty:
-        pass
+    if has_tca2004:
+        touch = tsc2004.TSC2004(i2c)
+        while not touch.touched:
+            pass
+    elif has_stmpe610:
+        touch = Adafruit_STMPE610_SPI(spi, digitalio.DigitalInOut(touch_cs))
+        while touch.buffer_empty:
+            pass
+    else:
+        raise Exception('No touch libraries!')
 
     print('Touch: Pass,', touch.read_data())
 except Exception as e:
@@ -71,18 +102,21 @@ except Exception as e:
     print('Neopixel: Fail,', e)
     all_passed = False
 
-try:
-    i2c = board.I2C()
-except Exception as e:
-    print('I2C: Fail,', e)
-    all_passed = False
-
 # Optional
 try:
     pct = adafruit_pct2075.PCT2075(i2c)
     print('Temperature: %.2f C' % pct.temperature)
 except Exception as e:
     print('Qwiic: Fail (might be fine),', e)
+
+# ALS
+try:
+    als = analogio.AnalogIn(board.A5)
+    print('ALS: %d' % als.value)
+except Exception as e:
+    print('ALS: Fail,', e)
+    all_passed = False
+
 
 # Keyboard test helper
 def await_key(kbd, key, name=''):

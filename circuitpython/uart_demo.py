@@ -5,10 +5,15 @@ import adafruit_ili9341
 import terminalio
 import displayio
 import neopixel
-import board
 import busio
 import time
 import gc
+
+# Optional Pico Adapter
+try:
+    import kfw_pico_board as board
+except:
+    import board
 
 # ui dimensions
 header = 32
@@ -121,5 +126,3 @@ while True:
                 input_text.text += k[1]
 
             carret.x = input_text.x + input_text.bounding_box[2] + 1
-
-
