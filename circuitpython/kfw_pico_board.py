@@ -46,7 +46,7 @@ def UART():
     global _UART
 
     if not _UART:
-        _UART = busio.UART(RX, TX)
+        _UART = busio.UART(TX, RX)
 
     return _UART
 
