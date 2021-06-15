@@ -4,7 +4,6 @@ This folder contains example CircuitPython code for the Keyboard FeatherWing
 
 Here are the libraries needed for the code to work properly:
 
-==== BASE ====
 | Functionality  | Name                      | Source |
 |----------------------|---------------------------|--------|
 | Common         | `adafruit_bus_device`     | https://github.com/adafruit/Adafruit_CircuitPython_BusDevice |
