@@ -80,6 +80,7 @@ IO43 = board.IO43
 IO44 = board.IO44
 LDO2 = board.LDO2
 LED = board.LED
+NEOPIXEL = D11
 board_id = board.board_id
 
 
